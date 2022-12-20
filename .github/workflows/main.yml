@@ -13,6 +13,10 @@ jobs:
     - name: Scripts
       shell: bash
       run: |
+        python3 --version
+        pip3 --version
+        virtualenv --version
+        python3.8 -m venv --version
         
         mkdir -p awscli-lambda awscli-lambda/layer
         cd awscli-lambda && python3.8 -m venv env
