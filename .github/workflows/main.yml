@@ -26,7 +26,7 @@ jobs:
         cp ../env/bin/aws .
         var="#!/var/lang/bin/python"
         head -1 aws
-        sed -i '1s/.*/$var/' aws
+        sed -i '1s|.*|#!/var/lang/bin/python|' aws
         head -1 aws
         zip -r ../lambda-awscli.zip *
         
