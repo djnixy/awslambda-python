@@ -10,7 +10,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - shell: bash
+    - name: Scripts
+      shell: bash
       run: |
         
         mkdir -p awscli-lambda awscli-lambda/layer
