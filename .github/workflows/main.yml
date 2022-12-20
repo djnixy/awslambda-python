@@ -12,8 +12,9 @@ jobs:
     
     - shell: bash
       run: |
+        
         mkdir -p awscli-lambda awscli-lambda/layer
-        cd awscli-lambda && virtualenv env
+        cd awscli-lambda && venv env
         cd env && source bin/activate
         pip install awscli
         cd ../layer/
