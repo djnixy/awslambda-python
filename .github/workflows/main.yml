@@ -1,0 +1,40 @@
+name: Deploy 
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - shell: bash
+      run: |
+        mkdir -p awscli-lambda awscli-lambda/layer
+        cd awscli-lambda && virtualenv env
+        cd env && source bin/activate
+        pip install awscli
+        cd ../layer/
+        cp -r ../env/lib/python3.9/site-packages/ .
+        cp ../env/bin/aws .
+        var="#!/var/lang/bin/python"
+        sed -i "1s/.*/$var/" aws
+        head aws
+        zip -r ../lambda-awscli.zip *
+        
+        
+    - name: AWS Lambda python deploy
+      # You may pin to the exact commit or the version.
+      # uses: denzalman/lambda-python-action@d7b3812adb14b4d02a89e4d3c6b53f166d4e1f69
+      uses: denzalman/lambda-python-action@v1.1.0
+      with:
+        # Lambda AWS Region
+        lambda_region: ap-southeast-1
+        # Requirements file name
+        requirements_txt: requirements.txt
+        # Lambda layer's ARN for dependencies
+        #lambda_layer_arn: # optional
+        # Lambda function name
+        lambda_function_name: lambda-rds-migrate
