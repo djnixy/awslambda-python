@@ -15,7 +15,7 @@ jobs:
       run: |
         python3 --version
         pip3 --version
-        virtualenv --version
+        # virtualenv --version # doesn't work here
         python3.8 -m venv --version
         
         mkdir -p awscli-lambda awscli-lambda/layer
