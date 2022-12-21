@@ -44,6 +44,7 @@ jobs:
         
         #touch lambda_function.py
         pwd
+        head lambda_function.py
         zip lambda-awscli.zip ../lambda_function.py
         ls lambda-awscli.zip
         aws lambda update-function-code --function-name rds-migrate --zip-file fileb://lambda-awscli.zip
