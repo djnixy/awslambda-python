@@ -3,6 +3,10 @@ on:
   push:
     branches: [ main ]
 
+env:
+  AWS_REGION: ap-southeast-1
+
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-20.04
@@ -10,6 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+        
     - name: Scripts
       shell: bash
       run: |
@@ -30,6 +41,9 @@ jobs:
         head -1 aws
         zip -r ../lambda-awscli.zip * > /dev/null
         cd ..
-        ls lambda-awscli.zip
         
+        touch lambda_function.py
+        zip lambda-awscli.zip lambda_function.py
+        ls lambda-awscli.zip
+        aws lambda update-function-code --function-name rds-migrate --zip-file fileb://lambda-awscli.zip
         
