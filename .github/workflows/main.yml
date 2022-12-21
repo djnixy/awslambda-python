@@ -39,6 +39,7 @@ jobs:
         head -1 aws
         sed -i '1s|.*|#!/var/lang/bin/python|' aws
         head -1 aws
+        aws --version
         zip -r ../lambda-awscli.zip * > /dev/null
         cd ..
         
