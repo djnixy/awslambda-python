@@ -18,4 +18,4 @@ def run_command(command):
     return True
 	
 def lambda_handler(event, context):
-	run_command('pwd && ../aws --version && ls -lah' )
+	run_command('../aws --version && ls -lah' )
