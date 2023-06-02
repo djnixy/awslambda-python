@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -25,6 +25,8 @@ jobs:
     - name: Scripts
       shell: bash
       run: |
+        set -e
+        aws sts get-caller-identity | grep Account
         python3 --version
         pip3 --version
         # virtualenv --version # doesn't work here
@@ -49,5 +51,5 @@ jobs:
         head ../lambda_function.py
         zip lambda-awscli.zip ../lambda_function.py
         ls lambda-awscli.zip
-        aws lambda update-function-code --function-name rds-migrate --zip-file fileb://lambda-awscli.zip
+        aws lambda update-function-code --function-name pythondemo --zip-file fileb://lambda-awscli.zip
         
