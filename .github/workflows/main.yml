@@ -27,29 +27,7 @@ jobs:
       run: |
         set -e
         aws sts get-caller-identity | grep Account
-        python3 --version
-        pip3 --version
-        # virtualenv --version # doesn't work here
-                
-        mkdir -p awscli-lambda awscli-lambda/layer
-        cd awscli-lambda && python3.8 -m venv env
-        cd env && source bin/activate
-        pip install awscli
-        cd ../layer/
-        cp -r ../env/lib/python3.8/site-packages/ .
-        cp ../env/bin/aws .
-
-        head -1 aws
-        sed -i '1s|.*|#!/var/lang/bin/python|' aws
-        head -1 aws
-        aws --version
-        zip -r ../lambda-awscli.zip * > /dev/null
-        cd ..
-        
-        #touch lambda_function.py
-        pwd
-        head ../lambda_function.py
-        zip lambda-awscli.zip ../lambda_function.py
+        zip lambda-awscli.zip lambda_function.py
         ls lambda-awscli.zip
         aws lambda update-function-code --function-name pythondemo --zip-file fileb://lambda-awscli.zip
         
