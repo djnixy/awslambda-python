@@ -27,8 +27,9 @@ jobs:
       run: |
         set -e
         aws sts get-caller-identity | grep Account
-        
-        zip lambda-awscli.zip lambda_function2.py
+        rm lambda_function.py
+        mv lambda_function2.py lambda_function.py
+        zip lambda-awscli.zip lambda_function.py
         ls lambda-awscli.zip
         aws lambda update-function-code --function-name pythondemo --zip-file fileb://lambda-awscli.zip
         
