@@ -26,7 +26,7 @@ jobs:
       shell: bash
       run: |
         set -e
-        aws sts get-caller-identity | grep Account
+
         rm lambda_function.py
         mv lambda_function2.py lambda_function.py
         zip lambda-awscli.zip lambda_function.py
