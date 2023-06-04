@@ -1,15 +1,20 @@
 import boto3
+import os
 
 def lambda_handler(event, context):
-    # Extract the instance ID and secret key from the event
+    # Extract the instance ID from the event
     instance_id = event['instance_id']
-    aws_access_key_id = event['aws_access_key_id']
-    aws_secret_access_key = event['aws_secret_access_key']
 
-    # Create a Boto3 session using the provided credentials
+    # Retrieve AWS credentials from environment variables
+    aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
+    aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
+    region = os.environ['AWS_REGION']
+
+    # Create a Boto3 session using the environment variables
     session = boto3.Session(
         aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key
+        aws_secret_access_key=aws_secret_access_key,
+        region_name=region
     )
 
     # Create an EC2 client using the session
