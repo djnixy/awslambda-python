@@ -5,12 +5,12 @@ def lambda_handler(event, context):
     # Extract the instance ID from the event
     instance_id = event['instance_id']
 
-    # Retrieve AWS credentials from environment variables
-    aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
-    aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
-    region = os.environ['AWS_REGION']
+    # Retrieve AWS credentials from custom environment variables
+    aws_access_key_id = os.environ['MY_AWS_ACCESS_KEY_ID']
+    aws_secret_access_key = os.environ['MY_AWS_SECRET_ACCESS_KEY']
+    region = os.environ['MY_AWS_REGION']
 
-    # Create a Boto3 session using the environment variables
+    # Create a Boto3 session using the custom environment variables
     session = boto3.Session(
         aws_access_key_id=aws_access_key_id,
         aws_secret_access_key=aws_secret_access_key,
